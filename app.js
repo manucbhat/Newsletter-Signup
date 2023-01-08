@@ -1,6 +1,5 @@
 const express = require('express')
-const bodyParser = require('body-parser')
-const request = require('request');
+const bodyParser = require('body-parser');
 const https = require('https');
 
 const app = express()
@@ -35,9 +34,16 @@ app.post("/",(req,res) =>{
 
     const options = {
         method: "POST",
-        auth : "manu:e560bbff56d402b9b68663bcdc77d173-us14"
+        auth : "manu:e560bbff56d402b9b68663bcdc77d173-us1"
     }
     const request = https.request(url,options,response =>{
+
+        if(response.statusCode === 200){
+            res.sendFile(__dirname + "/success.html");
+        }else{
+            res.sendFile(__dirname + "/failure.html");
+        }
+
         response.on("data",data =>{
             console.log(JSON.parse(data));
         })
@@ -47,6 +53,10 @@ app.post("/",(req,res) =>{
     request.end();
 
     
+});
+
+app.post("/failure",(req,res) =>{
+    res.redirect("/");
 })
 
 app.listen(port, () => console.log(`server is running on port ${port}!`))
