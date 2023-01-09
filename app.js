@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 app.get('/', (req, res) => res.sendFile(__dirname + "/signup.html"));
 
-app.post("/",(req,res) =>{
+app.post("/",async (req,res) =>{
     const firstName = req.body.fName;
     const lastName = req.body.lName;
     const email = req.body.email;
@@ -36,7 +36,8 @@ app.post("/",(req,res) =>{
         method: "POST",
         auth : "manu:e560bbff56d402b9b68663bcdc77d173-us14"
     }
-    const request = https.request(url,options,response =>{
+     const request = https.request(url,options,response =>
+     {
 
         if(response.statusCode === 200){
             res.sendFile(__dirname + "/success.html");
@@ -59,8 +60,4 @@ app.post("/failure",(req,res) =>{
     res.redirect("/");
 })
 
-app.listen(port || 3000, () => console.log(`server is running on port ${port}!`))
-
-
-//list id = 0fd33bb79b
-//api key = e560bbff56d402b9b68663bcdc77d173-us14
+app.listen(port , () => console.log(`server is running on port ${port}!`))
